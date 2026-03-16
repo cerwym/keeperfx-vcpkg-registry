@@ -12,23 +12,46 @@ vcpkg_cmake_configure(
     SOURCE_PATH "${SOURCE_PATH}"
     OPTIONS
         -DBUILD_SHARED_LIBS=OFF
-        -DNATPMP_STATICLIB=ON
+    MAYBE_UNUSED_VARIABLES
+        NATPMP_STATICLIB
 )
 
 vcpkg_cmake_install()
-vcpkg_cmake_config_fixup(CONFIG_PATH lib/cmake/libnatpmp PACKAGE_NAME libnatpmp)
+vcpkg_fixup_pkgconfig()
 
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/share")
 
-# On Windows, iphlpapi must be linked by the consumer
-file(WRITE "${CURRENT_PACKAGES_DIR}/share/libnatpmp/usage" [[
-libnatpmp provides CMake integration.
-
-  find_package(libnatpmp CONFIG REQUIRED)
-  target_link_libraries(main PRIVATE libnatpmp::libnatpmp)
-
-Note: on Windows, iphlpapi is linked automatically via the imported target.
+# libnatpmp has no upstream CMake config — write a minimal one so
+# find_package(libnatpmp CONFIG REQUIRED) works.
+set(_share "${CURRENT_PACKAGES_DIR}/share/libnatpmp")
+file(MAKE_DIRECTORY "${_share}")
+file(WRITE "${_share}/libnatpmpConfig.cmake" [[
+if(NOT TARGET libnatpmp::libnatpmp)
+    add_library(libnatpmp::libnatpmp STATIC IMPORTED)
+    get_filename_component(_natpmp_root "${CMAKE_CURRENT_LIST_DIR}/../.." ABSOLUTE)
+    find_library(_natpmp_lib NAMES natpmp PATHS "${_natpmp_root}/lib" NO_DEFAULT_PATH REQUIRED)
+    set_target_properties(libnatpmp::libnatpmp PROPERTIES
+        IMPORTED_LOCATION "${_natpmp_lib}"
+        INTERFACE_INCLUDE_DIRECTORIES "${_natpmp_root}/include"
+    )
+    if(WIN32)
+        set_property(TARGET libnatpmp::libnatpmp APPEND PROPERTY
+            INTERFACE_LINK_LIBRARIES iphlpapi)
+    endif()
+    unset(_natpmp_root)
+    unset(_natpmp_lib)
+endif()
+]])
+file(WRITE "${_share}/libnatpmpConfigVersion.cmake" [[
+set(PACKAGE_VERSION "2023-10-22")
+if(PACKAGE_FIND_VERSION AND PACKAGE_VERSION VERSION_LESS PACKAGE_FIND_VERSION)
+    set(PACKAGE_VERSION_COMPATIBLE FALSE)
+else()
+    set(PACKAGE_VERSION_COMPATIBLE TRUE)
+    set(PACKAGE_VERSION_EXACT FALSE)
+endif()
 ]])
 
+file(INSTALL "${CMAKE_CURRENT_LIST_DIR}/usage" DESTINATION "${_share}")
 vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE")
