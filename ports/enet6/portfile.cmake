@@ -16,6 +16,23 @@ vcpkg_cmake_configure(
 
 vcpkg_cmake_install()
 
+# Upstream installs enet6Targets.cmake but no Config wrapper — generate one
+file(WRITE "${CURRENT_PACKAGES_DIR}/lib/cmake/enet6/enet6Config.cmake"
+[[include(CMakeFindDependencyMacro)
+if(WIN32)
+    find_dependency(wsock32)
+    find_dependency(ws2_32)
+endif()
+include("${CMAKE_CURRENT_LIST_DIR}/enet6Targets.cmake")
+]])
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    "${CURRENT_PACKAGES_DIR}/lib/cmake/enet6/enet6ConfigVersion.cmake"
+    VERSION "${VERSION}"
+    COMPATIBILITY SameMajorVersion
+)
+
 vcpkg_cmake_config_fixup(CONFIG_PATH "lib/cmake/enet6")
 
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
