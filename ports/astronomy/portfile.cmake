@@ -4,7 +4,7 @@ vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO cosinekitty/astronomy
     REF "v${VERSION}"
-    SHA512 0
+    SHA512 b6e66d5f3ca0910c4deeeffaf331cf3d6f612e3435bdb1db5e6dc2b52464595eff1e61aa5f0ea1cae27d2bbabfd5cb89daffab97701eeb94fc6ab5784daaad88
     HEAD_REF master
 )
 
