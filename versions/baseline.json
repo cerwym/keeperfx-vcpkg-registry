@@ -1,0 +1,12 @@
+{
+  "default": {
+    "astronomy": {
+      "baseline": "2.1.19",
+      "port-version": 0
+    },
+    "libnatpmp": {
+      "baseline": "2023-10-22",
+      "port-version": 0
+    }
+  }
+}

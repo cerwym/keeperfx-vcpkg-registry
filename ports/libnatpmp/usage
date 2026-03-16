@@ -1,0 +1,4 @@
+libnatpmp provides CMake integration.
+
+  find_package(libnatpmp CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE libnatpmp::libnatpmp)

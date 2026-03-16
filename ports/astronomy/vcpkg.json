@@ -1,0 +1,8 @@
+{
+  "name": "astronomy",
+  "version": "2.1.19",
+  "description": "Astronomy Engine: a high-accuracy astronomy library for C/C++.",
+  "homepage": "https://github.com/cosinekitty/astronomy",
+  "license": "MIT",
+  "supports": "!uwp"
+}

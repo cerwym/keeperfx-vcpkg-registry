@@ -1,0 +1,4 @@
+astronomy provides CMake integration.
+
+  find_package(astronomy CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE astronomy::astronomy)
