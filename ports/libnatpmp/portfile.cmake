@@ -3,7 +3,7 @@ vcpkg_check_linkage(ONLY_STATIC_LIBRARY)
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO miniupnp/libnatpmp
-    REF 007f4f2765ef6e1b7b2bddcc03f3697fb3df74e5
+    REF 134fc89e2781e154e40042641f4d8bcbe42579f1
     SHA512 0
     HEAD_REF master
 )
