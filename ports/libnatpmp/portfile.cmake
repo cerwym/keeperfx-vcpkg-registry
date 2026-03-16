@@ -19,6 +19,14 @@ vcpkg_cmake_configure(
 vcpkg_cmake_install()
 vcpkg_fixup_pkgconfig()
 
+# Move headers into natpmp/ subdirectory so #include <natpmp/natpmp.h> works
+file(MAKE_DIRECTORY "${CURRENT_PACKAGES_DIR}/include/natpmp")
+foreach(_h natpmp.h natpmp_declspec.h)
+    if(EXISTS "${CURRENT_PACKAGES_DIR}/include/${_h}")
+        file(RENAME "${CURRENT_PACKAGES_DIR}/include/${_h}" "${CURRENT_PACKAGES_DIR}/include/natpmp/${_h}")
+    endif()
+endforeach()
+
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/share")
 
