@@ -1,0 +1,4 @@
+centijson provides CMake targets:
+
+  find_package(centijson CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE centijson::centijson)
