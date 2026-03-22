@@ -3,7 +3,7 @@ vcpkg_check_linkage(ONLY_STATIC_LIBRARY)
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO mity/centijson
-    REF 66e68c49d0c4c11cafc198c51c4837caff6fae9e
+    REF 218bc719d9e61e89084fcb723ea26529867c6b33
     SHA512 0
     HEAD_REF master
 )
