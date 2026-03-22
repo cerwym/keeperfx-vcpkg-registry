@@ -4,6 +4,10 @@
       "baseline": "2.1.19",
       "port-version": 0
     },
+    "centijson": {
+      "baseline": "0.0.0",
+      "port-version": 0
+    },
     "enet6": {
       "baseline": "6.1.3",
       "port-version": 0

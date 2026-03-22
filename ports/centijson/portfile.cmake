@@ -4,7 +4,7 @@ vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO mity/centijson
     REF 66e68c49d0c4c11cafc198c51c4837caff6fae9e
-    SHA512 4e9f5bb60f1e3fc8c00e8b5d6f1d5e7d8c3a2f4b9e6a1c8d7f5e3b2a9c4d1f7e8b5a6c3d9f2e1a7b4c8d5e3f1a9b6c2d7e4f8a5b1c3d9e6f2a8b5c1d4e7f3a9
+    SHA512 0
     HEAD_REF master
 )
 
