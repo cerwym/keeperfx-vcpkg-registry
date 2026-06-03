@@ -1,0 +1,19 @@
+{
+  "name": "centitoml",
+  "version": "0.1.0",
+  "description": "CentiTOML: a minimal TOML parser built on CentiJSON.",
+  "homepage": "https://github.com/cerwym/centitoml",
+  "license": "MIT",
+  "supports": "!uwp",
+  "dependencies": [
+    "centijson",
+    {
+      "name": "vcpkg-cmake",
+      "host": true
+    },
+    {
+      "name": "vcpkg-cmake-config",
+      "host": true
+    }
+  ]
+}

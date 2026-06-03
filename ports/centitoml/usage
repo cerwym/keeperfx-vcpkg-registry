@@ -1,0 +1,4 @@
+centitoml provides CMake targets:
+
+  find_package(centitoml CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE centitoml::centitoml)
