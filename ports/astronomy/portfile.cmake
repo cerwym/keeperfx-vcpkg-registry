@@ -6,6 +6,9 @@ vcpkg_from_github(
     REF "v${VERSION}"
     SHA512 b6e66d5f3ca0910c4deeeffaf331cf3d6f612e3435bdb1db5e6dc2b52464595eff1e61aa5f0ea1cae27d2bbabfd5cb89daffab97701eeb94fc6ab5784daaad88
     HEAD_REF master
+    PATCHES
+        fix-missing-initializer-warning.patch
+        fix-getsystemtimepreciseasfiletime-windows-compat.patch
 )
 
 # The upstream C source has no CMakeLists.txt; inject a minimal one.

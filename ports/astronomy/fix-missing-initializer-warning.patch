@@ -1,0 +1,22 @@
+From 34694ee7a8092cf6619c6fa6264f4f72bef9a8dc Mon Sep 17 00:00:00 2001
+From: Yani <6956790+yani@users.noreply.github.com>
+Date: Wed, 31 Jul 2024 00:34:45 +0200
+Subject: [PATCH] fix missing initializer warning
+
+---
+ source/c/astronomy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/source/c/astronomy.c b/source/c/astronomy.c
+index 08ec6c76..07fc730e 100644
+--- a/source/c/astronomy.c
++++ b/source/c/astronomy.c
+@@ -11230,7 +11230,7 @@ static const constel_boundary_t ConstelBounds[] = {
+ astro_constellation_t Astronomy_Constellation(double ra, double dec)
+ {
+     static astro_time_t epoch2000;
+-    static astro_rotation_t rot = { ASTRO_NOT_INITIALIZED };
++    static astro_rotation_t rot = { ASTRO_NOT_INITIALIZED, {{0}} };
+     astro_constellation_t constel;
+     astro_spherical_t s2000;
+     astro_equatorial_t b1875;
