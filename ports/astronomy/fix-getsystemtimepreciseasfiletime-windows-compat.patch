@@ -1,0 +1,40 @@
+From 5773820d9cf1c1c1836028f7dd80dfe27669e194 Mon Sep 17 00:00:00 2001
+From: Yani <6956790+yani@users.noreply.github.com>
+Date: Sat, 10 Aug 2024 18:02:10 +0200
+Subject: [PATCH] Check if GetSystemTimePreciseAsFileTime() is available and
+ fallback to GetSystemTimeAsFileTime()
+
+---
+ source/c/astronomy.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/source/c/astronomy.c b/source/c/astronomy.c
+index 08ec6c76..8325a764 100644
+--- a/source/c/astronomy.c
++++ b/source/c/astronomy.c
+@@ -1013,7 +1013,24 @@ astro_time_t Astronomy_CurrentTime(void)
+     FILETIME ft;
+     ULARGE_INTEGER large;
+     /* Get time in 100-nanosecond units from January 1, 1601. */
+-    GetSystemTimePreciseAsFileTime(&ft);
++    /* GetSystemTimePreciseAsFileTime is only available since Windows 8 */
++    typedef void (WINAPI *GetSystemTimePreciseAsFileTimeFunc)(LPFILETIME);
++    GetSystemTimePreciseAsFileTimeFunc pGetSystemTimePreciseAsFileTime = NULL;
++    HMODULE hModule = GetModuleHandleA("kernel32.dll");
++    if (hModule) {
++        union {
++            FARPROC proc;
++            GetSystemTimePreciseAsFileTimeFunc func;
++        } converter;
++        converter.proc = GetProcAddress(hModule, "GetSystemTimePreciseAsFileTime");
++        pGetSystemTimePreciseAsFileTime = converter.func;
++    }
++    // Use the function if available, otherwise fallback
++    if (pGetSystemTimePreciseAsFileTime) {
++        pGetSystemTimePreciseAsFileTime(&ft);
++    } else {
++        GetSystemTimeAsFileTime(&ft);
++    }
+     large.u.LowPart  = ft.dwLowDateTime;
+     large.u.HighPart = ft.dwHighDateTime;
+     sec = (large.QuadPart - 116444736000000000ULL) / 1.0e+7;
