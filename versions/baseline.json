@@ -1,24 +1,8 @@
 {
   "default": {
-    "centitoml": {
-      "baseline": "0.1.0",
+    "sdl3-mixer": {
+      "baseline": "3.2.0",
       "port-version": 0
-    },
-    "astronomy": {
-      "baseline": "2.1.19",
-      "port-version": 1
-    },
-    "centijson": {
-      "baseline": "0.0.0",
-      "port-version": 0
-    },
-    "enet6": {
-      "baseline": "6.1.3",
-      "port-version": 0
-    },
-    "libnatpmp": {
-      "baseline": "2023-10-22",
-      "port-version": 1
     }
   }
 }
